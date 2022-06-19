@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="smpn29jkt">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/smpn29jkt.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
