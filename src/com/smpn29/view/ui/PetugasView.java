@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.smpn29.view.main;
+package com.smpn29.view.ui;
 
-import com.smpn29.controller.KelasController;
+import com.smpn29.controller.PetugasController;
 import com.smpn29.repo.database.Auth;
+import java.awt.event.WindowListener;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -13,39 +15,48 @@ import javax.swing.JTextField;
  *
  * @author Rahman S
  */
-public class KelasView extends javax.swing.JFrame {
-    KelasController controller;
-    /**
-     * Creates new form KelasView
-     */
-    public KelasView() {
-       
+public class PetugasView extends javax.swing.JFrame {
 
+    private PetugasController controller;
+
+    /**
+     * Creates new form PetugasView
+     */
+    public PetugasView() {
+       
         initComponents();
-        
         setLocationRelativeTo(null);
 
-        controller = new KelasController();
+        controller = new PetugasController();
 
         controller.loadTable(this);
-        
-        
+
     }
+
     
-     public JTextField getTextID() {
-        return textID;
+
+    public JTable getTablePetugas() {
+        return tablePetugas;
     }
 
-    public JTextField getTextCode() {
-        return textCode;
+    public JTextField getTextID() {
+        return idPetugasTxt;
     }
 
-    public JTextField getNamaKelas() {
-        return textKelas;
+    public JComboBox<String> getSelectLevel() {
+        return selectLevel;
     }
 
-    public JTable getTableKelas() {
-        return tableKelas;
+    public JTextField getTextNama() {
+        return textName;
+    }
+
+    public JTextField getTextPassword() {
+        return textPassword;
+    }
+
+    public JTextField getTextUsername() {
+        return textUsername;
     }
 
     /**
@@ -58,69 +69,53 @@ public class KelasView extends javax.swing.JFrame {
     private void initComponents() {
 
         jSplitPane1 = new javax.swing.JSplitPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableKelas = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        textID = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        textKelas = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        textCode = new javax.swing.JTextField();
+        textUsername = new javax.swing.JTextField();
+        textPassword = new javax.swing.JTextField();
+        textName = new javax.swing.JTextField();
+        selectLevel = new javax.swing.JComboBox<>();
         saveButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        idPetugasTxt = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         resetButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablePetugas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(640, 428));
 
-        tableKelas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Class Name", "Class Code"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tableKelas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableKelasMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tableKelas);
-
-        jSplitPane1.setRightComponent(jScrollPane1);
-
-        jPanel1.setMinimumSize(new java.awt.Dimension(200, 100));
-        jPanel1.setPreferredSize(new java.awt.Dimension(200, 426));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setMinimumSize(new java.awt.Dimension(200, 0));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 0));
-        jLabel2.setText("Master Class");
+        jLabel2.setText("Petugas");
 
-        jLabel6.setText("ID");
+        selectLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "petugas", "admin" }));
 
-        textID.setEditable(false);
-
-        jLabel1.setText("Class Name");
-
-        jLabel3.setText("Class Code ");
-
-        saveButton.setText("Save");
+        saveButton.setText("Simpan");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Username");
+
+        jLabel3.setText("Password");
+
+        jLabel4.setText("Name");
+
+        jLabel5.setText("Level");
+
+        idPetugasTxt.setEditable(false);
+
+        jLabel6.setText("ID");
 
         resetButton.setText("Reset");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -145,17 +140,21 @@ public class KelasView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textKelas)
-                    .addComponent(textCode, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(textID)
+                    .addComponent(textUsername)
+                    .addComponent(textPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(textName)
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(selectLevel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(idPetugasTxt)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
+                            .addComponent(jLabel4)
                             .addComponent(jLabel6))
-                        .addGap(0, 75, Short.MAX_VALUE))
-                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 115, Short.MAX_VALUE))
                     .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -163,48 +162,91 @@ public class KelasView extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(idPetugasTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textKelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addGap(3, 3, 3)
+                .addComponent(selectLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(saveButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resetButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteButton)
-                .addContainerGap(5, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
+
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(400, 27));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(600, 346));
+
+        tablePetugas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Username", "Password", "Name", "Level"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablePetugas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePetugasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablePetugas);
+
+        jSplitPane1.setRightComponent(jScrollPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tableKelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableKelasMouseClicked
-        controller.setFormFieldFromClickedTable(this);
-    }//GEN-LAST:event_tableKelasMouseClicked
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         controller.save(this);
@@ -217,6 +259,10 @@ public class KelasView extends javax.swing.JFrame {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         controller.delete(this);
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void tablePetugasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePetugasMouseClicked
+        controller.setFormFieldFromClickedTable(this);
+    }//GEN-LAST:event_tablePetugasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -235,38 +281,42 @@ public class KelasView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(KelasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PetugasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(KelasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PetugasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(KelasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PetugasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(KelasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PetugasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new KelasView().setVisible(true);
+                new PetugasView().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
+    private javax.swing.JTextField idPetugasTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton resetButton;
     private javax.swing.JButton saveButton;
-    private javax.swing.JTable tableKelas;
-    private javax.swing.JTextField textCode;
-    private javax.swing.JTextField textID;
-    private javax.swing.JTextField textKelas;
+    private javax.swing.JComboBox<String> selectLevel;
+    private javax.swing.JTable tablePetugas;
+    private javax.swing.JTextField textName;
+    private javax.swing.JTextField textPassword;
+    private javax.swing.JTextField textUsername;
     // End of variables declaration//GEN-END:variables
 }

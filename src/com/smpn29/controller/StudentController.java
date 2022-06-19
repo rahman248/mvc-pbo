@@ -10,7 +10,7 @@ import com.smpn29.repo.dao.StudentDao;
 import com.smpn29.repo.model.Kelas;
 import com.smpn29.repo.model.Spp;
 import com.smpn29.repo.model.Student;
-import com.smpn29.view.main.StudentView;
+import com.smpn29.view.ui.StudentView;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;

@@ -6,7 +6,7 @@ package com.smpn29.controller;
 
 import com.smpn29.repo.dao.KelasDao;
 import com.smpn29.repo.model.Kelas;
-import com.smpn29.view.main.KelasView;
+import com.smpn29.view.ui.KelasView;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

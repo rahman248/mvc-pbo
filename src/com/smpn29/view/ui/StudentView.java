@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.smpn29.view.main;
+package com.smpn29.view.ui;
 
 import com.smpn29.controller.StudentController;
 import javax.swing.JComboBox;

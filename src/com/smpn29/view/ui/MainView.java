@@ -1,4 +1,4 @@
-package com.smpn29.view.main;
+package com.smpn29.view.ui;
 
 import com.smpn29.controller.MainController;
 import com.smpn29.repo.database.Auth;
@@ -94,6 +94,7 @@ public class MainView extends javax.swing.JFrame {
         studentTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1140, 628));
 
         mainSplitPanel.setMinimumSize(new java.awt.Dimension(434, 113));
         mainSplitPanel.setPreferredSize(new java.awt.Dimension(1110, 628));
@@ -375,7 +376,7 @@ public class MainView extends javax.swing.JFrame {
 
         rightPanel.addTab("All Payment", new javax.swing.ImageIcon(getClass().getResource("/assets/payment-method.png")), allPaymentPanel); // NOI18N
 
-        paymentPanel.setPreferredSize(new java.awt.Dimension(900, 595));
+        paymentPanel.setPreferredSize(new java.awt.Dimension(910, 595));
 
         jSplitPane2.setPreferredSize(new java.awt.Dimension(854, 595));
 
@@ -397,7 +398,7 @@ public class MainView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        historyPayment.setCellSelectionEnabled(true);
+        historyPayment.setColumnSelectionAllowed(false);
         historyPayment.setPreferredSize(new java.awt.Dimension(400, 80));
         jScrollPane4.setViewportView(historyPayment);
         if (historyPayment.getColumnModel().getColumnCount() > 0) {
@@ -461,25 +462,27 @@ public class MainView extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(btnResetEntri)
                             .addGap(26, 26, 26)
                             .addComponent(btnAddEntry))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(entryPayment)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(paymentAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(entryPayment)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel8))
+                            .addGap(41, 41, 41)))
                     .addComponent(paymentYear, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(paymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNameNISNEntri)
-                    .addComponent(paymentMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(71, Short.MAX_VALUE))
+                    .addComponent(paymentMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(labelNameNISNEntri, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -490,7 +493,7 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelNameNISNEntri)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -510,7 +513,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddEntry)
                     .addComponent(btnResetEntri))
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel2);

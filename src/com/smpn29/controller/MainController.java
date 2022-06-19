@@ -14,7 +14,7 @@ import com.smpn29.repo.model.Payment;
 import com.smpn29.repo.model.Petugas;
 import com.smpn29.repo.model.Spp;
 import com.smpn29.repo.model.Student;
-import com.smpn29.view.main.MainView;
+import com.smpn29.view.ui.MainView;
 import java.io.File;
 
 import java.util.ArrayList;
@@ -54,9 +54,7 @@ public class MainController {
 
     Student selectedStudent = null;
 
-    
-
-    public  void searchUser(MainView view) {
+    public void searchUser(MainView view) {
         String nisn = view.searchField.getText();
 
         selectedStudent = studentDao.find(nisn);
@@ -85,20 +83,20 @@ public class MainController {
     }
 
     public void populateTabelSiswa(MainView view) {
-        DefaultTableModel tableModel = (DefaultTableModel) view.allHistoryPayment.getModel();
-
-        tableModel.setNumRows(0);
-
+        
         if (selectedStudent == null) {
             return;
         }
 
-         ArrayList<Payment> listPaymentSiswa = selectedStudent.getPayment();
+        ArrayList<Payment> listPaymentSiswa = selectedStudent.getPayment();
+        DefaultTableModel tableModel = (DefaultTableModel) view.historyPayment.getModel();
 
+        tableModel.setNumRows(0);
+        System.out.println("Data " +counting(listPaymentSiswa));
         listPaymentSiswa.forEach((payment) -> {
             Object[] row = new Object[6];
 
-            row[0] = numToString( payment.getPaymentId());
+            row[0] = numToString(payment.getPaymentId());
             row[1] = payment.getPetugas() != null ? payment.getPetugas().getName() : "-";
             row[2] = payment.getTglBayar();
             row[3] = payment.getBulanBayar();
@@ -110,7 +108,7 @@ public class MainController {
     }
 
     public void loadTabelPembayaran(MainView view) {
-        ArrayList<Payment>  listPaymentSiswa = paymentDao.all();
+        ArrayList<Payment> listPaymentSiswa = paymentDao.all();
 
         DefaultTableModel tableModel = (DefaultTableModel) view.allHistoryPayment.getModel();
 
@@ -118,7 +116,8 @@ public class MainController {
 
         listPaymentSiswa.forEach((payment) -> {
             Object[] row = new Object[8];
-            System.out.println("Data " + numToString( payment.getPaymentId()));
+            System.out.println("Data " +counting(listPaymentSiswa));
+           
             row[0] = numToString( payment.getPaymentId());
             row[1] = payment.getPetugas() != null ? payment.getPetugas().getName() : "-";
             row[2] = payment.getStudent() != null ? payment.getStudent().getNama() : "-";
@@ -131,10 +130,19 @@ public class MainController {
             tableModel.addRow(row);
         });
     }
-    
-    static String numToString(int num){
-     
+
+    static String numToString(int num) {
+
         return String.format("%06d", num);
+    }
+
+    static int counting(ArrayList<Payment> listPaymentSiswa) {
+        int count = 0;
+        for (int i = 1; i < listPaymentSiswa.size(); i++) {
+            count = i;
+             System.out.println("Data  Array " +count);
+        }
+        return count;
     }
 
     public void resetEntri(MainView view) {
@@ -282,35 +290,31 @@ public class MainController {
     }
 
     public void generateLaporan(MainView view) {
-        
-        
-         
+
         File dir1 = new File(".");
         String dirr = "";
-        
+
         try {
-           
-            
+
             Connection con = DbConnections.createConnection();
             Statement statement = con.createStatement();
-            
-            dirr = dir1.getCanonicalPath()+"/src/assets/";
+
+            dirr = dir1.getCanonicalPath() + "/src/assets/";
             String query = "SELECT p.payment_id, pt.name, sw.nisn, sw.nama, k.kelas_name, p.tgl_bayar, p.bulan_bayar, p.tahun_bayar, s.tahun, s.nominal, p.jumlah_bayar FROM payment AS p LEFT JOIN petugas AS pt ON p.petugas_id = pt.petugas_id LEFT JOIN student AS sw ON p.nisn = sw.nisn LEFT JOIN kelas AS k ON sw.kelas_id = k.kelas_id LEFT JOIN spp AS s ON p.spp_id = s.spp_id GROUP BY p.payment_id ORDER BY p.tgl_bayar DESC,p.payment_id DESC";
-                    
-                  
-            JasperDesign disain = JRXmlLoader.load(dirr+"Leaf_Green.jrxml");
+
+            JasperDesign disain = JRXmlLoader.load(dirr + "Leaf_Green.jrxml");
             JasperReport nilaiLaporan = JasperCompileManager.compileReport(disain);
             ResultSet rs = statement.executeQuery(query);
             JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(rs);
             JasperPrint cetak = JasperFillManager.fillReport(nilaiLaporan, new HashMap(), resultSetDataSource);
-            
-            JasperViewer.viewReport(cetak);  
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Gagal mencetak\n"+e);
-        }
-        
 
-       /* try {
+            JasperViewer.viewReport(cetak);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal mencetak\n" + e);
+        }
+
+
+        /* try {
             Map<String, Object> params = new HashMap();
 
             params.put("tahun_spp", view.selectionYearReport.getSelectedItem());

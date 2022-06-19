@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.smpn29.view.Login;
+package com.smpn29.view.ui;
 
 import com.smpn29.controller.KelasController;
 import com.smpn29.controller.LoginController;
 import com.smpn29.listener.LoginListener;
-import com.smpn29.view.main.MainView;
+import com.smpn29.view.ui.MainView;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 

@@ -4,8 +4,8 @@
  */
 package com.smpn29;
 
-import com.smpn29.view.Login.LoginView;
-import com.smpn29.view.Splash.Splash;
+import com.smpn29.view.ui.LoginView;
+import com.smpn29.view.ui.Splash;
 import java.sql.Connection;
 import java.util.Locale;
 

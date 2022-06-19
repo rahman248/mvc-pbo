@@ -6,7 +6,7 @@ package com.smpn29.controller;
 
 import com.smpn29.repo.dao.SppDao;
 import com.smpn29.repo.model.Spp;
-import com.smpn29.view.main.SppView;
+import com.smpn29.view.ui.SppView;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

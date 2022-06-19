@@ -6,7 +6,7 @@ package com.smpn29.controller;
 
 import com.smpn29.repo.dao.PetugasDao;
 import com.smpn29.repo.model.Petugas;
-import com.smpn29.view.main.PetugasView;
+import com.smpn29.view.ui.PetugasView;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

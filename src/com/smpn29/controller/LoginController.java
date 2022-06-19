@@ -7,8 +7,8 @@ package com.smpn29.controller;
 import com.smpn29.repo.dao.PetugasDao;
 import com.smpn29.repo.database.Auth;
 import com.smpn29.repo.model.Petugas;
-import com.smpn29.view.Login.LoginView;
-import com.smpn29.view.main.MainView;
+import com.smpn29.view.ui.LoginView;
+import com.smpn29.view.ui.MainView;
 
 import javax.swing.JOptionPane;
 
