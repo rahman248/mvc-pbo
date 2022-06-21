@@ -19,7 +19,7 @@ public class Auth {
     }
 
     public static void setUser(Petugas user) {
-        Auth.mUser = mUser;
+        Auth.mUser = user;
     }
 
     public static Petugas check() {

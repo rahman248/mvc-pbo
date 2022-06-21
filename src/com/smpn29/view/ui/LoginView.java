@@ -4,7 +4,6 @@
  */
 package com.smpn29.view.ui;
 
-import com.smpn29.controller.KelasController;
 import com.smpn29.controller.LoginController;
 import com.smpn29.listener.LoginListener;
 import com.smpn29.view.ui.MainView;
@@ -29,6 +28,7 @@ public class LoginView extends javax.swing.JFrame {
      * Creates new form LoginView
      */
     public LoginView() {
+        
         initComponents();
         this.setLocationRelativeTo(null);
         

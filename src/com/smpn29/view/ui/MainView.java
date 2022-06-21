@@ -16,13 +16,13 @@ public class MainView extends javax.swing.JFrame {
      * Creates new form MainView
      */
     public MainView() {
-       
+        Auth.check();
         
         initComponents();
         this.setLocationRelativeTo(null);
         controller.refresh(this);
-        allHistoryPayment.setAutoCreateRowSorter(true);
-        historyPayment.setAutoCreateRowSorter(true);
+        paymentTable.setAutoCreateRowSorter(true);
+        studentPaymentHistory.setAutoCreateRowSorter(true);
         studentTable.setAutoCreateRowSorter(true);
         
         controller.setupDropdown(this);
@@ -71,15 +71,17 @@ public class MainView extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         rightPanel = new javax.swing.JTabbedPane();
         allPaymentPanel = new javax.swing.JScrollPane();
-        allHistoryPayment = new javax.swing.JTable();
+        paymentTable = new javax.swing.JTable();
+        allStudentPanel = new javax.swing.JScrollPane();
+        studentTable = new javax.swing.JTable();
         paymentPanel = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jScrollPane4 = new javax.swing.JScrollPane();
-        historyPayment = new javax.swing.JTable();
+        studentPaymentHistory = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         entryPayment = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        labelNameNISNEntri = new javax.swing.JLabel();
+        labelNameEntri = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         paymentDate = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
@@ -90,11 +92,9 @@ public class MainView extends javax.swing.JFrame {
         paymentMonth = new com.toedter.calendar.JMonthChooser();
         jLabel8 = new javax.swing.JLabel();
         paymentYear = new com.toedter.calendar.JYearChooser();
-        allStudentPanel = new javax.swing.JScrollPane();
-        studentTable = new javax.swing.JTable();
+        labelNISNEntri = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1140, 628));
 
         mainSplitPanel.setMinimumSize(new java.awt.Dimension(434, 113));
         mainSplitPanel.setPreferredSize(new java.awt.Dimension(1110, 628));
@@ -361,7 +361,7 @@ public class MainView extends javax.swing.JFrame {
         rightPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         rightPanel.setPreferredSize(new java.awt.Dimension(900, 628));
 
-        allHistoryPayment.setModel(new javax.swing.table.DefaultTableModel(
+        paymentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -372,9 +372,34 @@ public class MainView extends javax.swing.JFrame {
                 "ID", "Petugas", "Siswa", "Tgl Bayar", "Bulan", "Tahun", "SPP", "Nominal"
             }
         ));
-        allPaymentPanel.setViewportView(allHistoryPayment);
+        allPaymentPanel.setViewportView(paymentTable);
 
         rightPanel.addTab("All Payment", new javax.swing.ImageIcon(getClass().getResource("/assets/payment-method.png")), allPaymentPanel); // NOI18N
+
+        studentTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "NISN", "NIS", "Name", "Class", "Address", "Phone ", "SPP"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        studentTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentTableMouseClicked(evt);
+            }
+        });
+        allStudentPanel.setViewportView(studentTable);
+
+        rightPanel.addTab("All Student", new javax.swing.ImageIcon(getClass().getResource("/assets/student.png")), allStudentPanel); // NOI18N
 
         paymentPanel.setPreferredSize(new java.awt.Dimension(910, 595));
 
@@ -382,7 +407,7 @@ public class MainView extends javax.swing.JFrame {
 
         jScrollPane4.setPreferredSize(new java.awt.Dimension(600, 402));
 
-        historyPayment.setModel(new javax.swing.table.DefaultTableModel(
+        studentPaymentHistory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -398,16 +423,15 @@ public class MainView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        historyPayment.setColumnSelectionAllowed(false);
-        historyPayment.setPreferredSize(new java.awt.Dimension(400, 80));
-        jScrollPane4.setViewportView(historyPayment);
-        if (historyPayment.getColumnModel().getColumnCount() > 0) {
-            historyPayment.getColumnModel().getColumn(0).setResizable(false);
-            historyPayment.getColumnModel().getColumn(1).setResizable(false);
-            historyPayment.getColumnModel().getColumn(2).setResizable(false);
-            historyPayment.getColumnModel().getColumn(3).setResizable(false);
-            historyPayment.getColumnModel().getColumn(4).setResizable(false);
-            historyPayment.getColumnModel().getColumn(5).setResizable(false);
+        studentPaymentHistory.setPreferredSize(new java.awt.Dimension(400, 80));
+        jScrollPane4.setViewportView(studentPaymentHistory);
+        if (studentPaymentHistory.getColumnModel().getColumnCount() > 0) {
+            studentPaymentHistory.getColumnModel().getColumn(0).setResizable(false);
+            studentPaymentHistory.getColumnModel().getColumn(1).setResizable(false);
+            studentPaymentHistory.getColumnModel().getColumn(2).setResizable(false);
+            studentPaymentHistory.getColumnModel().getColumn(3).setResizable(false);
+            studentPaymentHistory.getColumnModel().getColumn(4).setResizable(false);
+            studentPaymentHistory.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jSplitPane2.setLeftComponent(jScrollPane4);
@@ -421,8 +445,8 @@ public class MainView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Student");
 
-        labelNameNISNEntri.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        labelNameNISNEntri.setText("-");
+        labelNameEntri.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelNameEntri.setText("-");
 
         jLabel5.setText("Payment Date");
 
@@ -456,33 +480,40 @@ public class MainView extends javax.swing.JFrame {
 
         jLabel8.setText("Payment Year");
 
+        labelNISNEntri.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelNISNEntri.setText("-");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(btnResetEntri)
-                            .addGap(26, 26, 26)
-                            .addComponent(btnAddEntry))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(entryPayment)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel8))
-                            .addGap(41, 41, 41)))
-                    .addComponent(paymentYear, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(paymentMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paymentAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(labelNameNISNEntri, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelNameEntri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(btnResetEntri)
+                                    .addGap(26, 26, 26)
+                                    .addComponent(btnAddEntry))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(entryPayment)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel8))
+                                    .addGap(41, 41, 41)))
+                            .addComponent(paymentYear, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(paymentMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(paymentAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(paymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 38, Short.MAX_VALUE))
+                    .addComponent(labelNISNEntri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -492,7 +523,9 @@ public class MainView extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNameNISNEntri)
+                .addComponent(labelNameEntri)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelNISNEntri)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -513,7 +546,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddEntry)
                     .addComponent(btnResetEntri))
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel2);
@@ -526,35 +559,10 @@ public class MainView extends javax.swing.JFrame {
         );
         paymentPanelLayout.setVerticalGroup(
             paymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         rightPanel.addTab("Student Payment", new javax.swing.ImageIcon(getClass().getResource("/assets/receipt.png")), paymentPanel); // NOI18N
-
-        studentTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "NISN", "NIS", "Name", "Class", "Address", "Phone ", "SPP"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        studentTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                studentTableMouseClicked(evt);
-            }
-        });
-        allStudentPanel.setViewportView(studentTable);
-
-        rightPanel.addTab("All Student", new javax.swing.ImageIcon(getClass().getResource("/assets/student.png")), allStudentPanel); // NOI18N
 
         mainSplitPanel.setRightComponent(rightPanel);
 
@@ -656,7 +664,6 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTable allHistoryPayment;
     private javax.swing.JScrollPane allPaymentPanel;
     private javax.swing.JScrollPane allStudentPanel;
     private javax.swing.JButton btnAddEntry;
@@ -667,7 +674,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton buttonOpenSpp;
     private javax.swing.JButton buttonOpenStudent;
     private javax.swing.JLabel entryPayment;
-    public javax.swing.JTable historyPayment;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
@@ -683,7 +689,8 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSplitPane jSplitPane2;
-    public javax.swing.JLabel labelNameNISNEntri;
+    public javax.swing.JLabel labelNISNEntri;
+    public javax.swing.JLabel labelNameEntri;
     public javax.swing.JLabel labelUserAlamat;
     public javax.swing.JLabel labelUserKelas;
     public javax.swing.JLabel labelUserNIS;
@@ -699,6 +706,7 @@ public class MainView extends javax.swing.JFrame {
     public com.toedter.calendar.JDateChooser paymentDate;
     public com.toedter.calendar.JMonthChooser paymentMonth;
     private javax.swing.JPanel paymentPanel;
+    public javax.swing.JTable paymentTable;
     public com.toedter.calendar.JYearChooser paymentYear;
     private javax.swing.JLabel refreshBtn;
     public javax.swing.JTabbedPane rightPanel;
@@ -706,6 +714,7 @@ public class MainView extends javax.swing.JFrame {
     public javax.swing.JTextField searchField;
     private javax.swing.JPanel searchPanel;
     public javax.swing.JComboBox<String> selectionYearReport;
+    public javax.swing.JTable studentPaymentHistory;
     public javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables
 }

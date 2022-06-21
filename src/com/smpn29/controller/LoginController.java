@@ -8,7 +8,6 @@ import com.smpn29.repo.dao.PetugasDao;
 import com.smpn29.repo.database.Auth;
 import com.smpn29.repo.model.Petugas;
 import com.smpn29.view.ui.LoginView;
-import com.smpn29.view.ui.MainView;
 
 import javax.swing.JOptionPane;
 
@@ -28,13 +27,14 @@ public class LoginController {
 
         if (user != null) {
             Auth.setUser(user);
-            
 
+            view.loginListener.onSuccess();
         } else {
             JOptionPane.showMessageDialog(null, "username atau password salah!");
+
             Auth.setUser(null);
-         
+
+            view.loginListener.onFailure();
         }
     }
-
 }
